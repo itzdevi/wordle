@@ -13,7 +13,7 @@ export default {
     addGuess() {
       let guessElem = this.$refs.guessInput;
       let guess = guessElem.value;
-      let answerTemp = answer;
+      let tempAnswer = answer;
       guessElem.value = "";
       if (guessNum === 6) {
         guessElem.placeholder = "YOU FAILED! THE WORD WAS " + answer.toUpperCase();
@@ -30,13 +30,12 @@ export default {
       guessElem.placeholder = "";
       for (let i = 0; i < 5; i++) {
         this.$refs[guessNum].children[i].innerHTML = guess[i];
-        if (answerTemp.includes(guess[i])) {
-          if (guess[i] === answerTemp[i]) {
-            this.$refs[guessNum].children[i].classList.add("correct");
-            continue;
-          }
-          this.$refs[guessNum].children[i].classList.add("contains");
+        if (guess[i] === answer[i]) {
+          this.$refs[guessNum].children[i].classList.add("correct");
+          continue;
         }
+        if (tempAnswer.includes(guess[i]))
+          this.$refs[guessNum].children[i].classList.add("contains");
       }
       guessNum++;
       if (guessNum === 6) {
